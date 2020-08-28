@@ -5,10 +5,8 @@ cpp_code = ""
 
 target_file = sys.argv[1]
 
-with open(target_file, "r") as f:
-    lines = f.readlines()
-    for line in lines:
-        cpp_code += line
+with open(target_file, 'r') as f:
+    cpp_code = f.read()
 
 python_code = "import subprocess\nimport sys\n\ncode = r\"\"\"" + cpp_code + \
     "\"\"\"\n\nwith open(\'sol.cpp\', \'w\') as f:\n    f.write(code)\n\n" + \
