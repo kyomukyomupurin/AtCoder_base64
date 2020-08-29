@@ -15,7 +15,8 @@ with open(Path(cpp_file).stem, 'rb') as f:
 
 ascii_bin = base64.b64encode(ascii_bin)
 
-rust_code = "fn main() {\n    \
+rust_code = "// Thanks, tanakh-san. https://github.com/tanakh/cargo-atcoder\n\
+fn main() {\n    \
 let exe = \"/tmp/bin\";\n    \
 std::io::Write::write_all(&mut std::fs::File::create(exe).unwrap(), &decode(BIN)).unwrap();\n    \
 std::fs::set_permissions(exe, std::os::unix::fs::PermissionsExt::from_mode(0o755)).unwrap();\n    \
