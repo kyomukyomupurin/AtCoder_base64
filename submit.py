@@ -6,8 +6,8 @@ exe_bin = "f0VMRgIBAQAAAAAAAAAAAAMAPgABAAAAAAgAAAAAAABAAAAAAAAAAAAbAAAAAAAAAAAAA
 
 exe_bin = base64.b64decode(exe_bin)
 
-with open("./exec", 'wb') as f:
+with open("./kyomu", 'wb') as f:
     f.write(exe_bin)
 
-subprocess.run(["chmod +x ./exec"], shell=True)
-subprocess.run(["./exec"], shell=True)
+subprocess.run(["chmod +x ./kyomu"], shell=True)
+subprocess.run(["./kyomu"], shell=True)
