@@ -18,4 +18,4 @@ ascii_bin = str(ascii_bin, encoding='utf-8')
 
 with open("./submit.py", 'w') as f:
     f.write("import base64\nimport subprocess\n\n\nexe_bin = \"" + ascii_bin +
-            "\"\n\nexe_bin = base64.b85decode(exe_bin)\n\nwith open(\"./exec\", \'wb\') as f:\n    f.write(exe_bin)\n\nsubprocess.run([\"chmod +x ./exec\"], shell=True)\nsubprocess.run([\"./exec\"], shell=True)")
+            "\"\n\nexe_bin = base64.b85decode(exe_bin)\n\nwith open(\"./kyomu\", \'wb\') as f:\n    f.write(exe_bin)\n\nsubprocess.run([\"chmod +x ./kyomu\"], shell=True)\nsubprocess.run([\"./kyomu\"], shell=True)")
