@@ -16,9 +16,6 @@ with open(Path(cpp_file).stem, 'rb') as f:
 ascii_bin = base64.b64encode(ascii_bin)
 ascii_bin = str(ascii_bin, encoding='utf-8')
 
-with open("./ascii_bin.txt", 'w') as f:
-    f.write(ascii_bin)
-
 with open("./submit.py", 'w') as f:
     f.write("import base64\nimport subprocess\n\n\nexe_bin = \"" + ascii_bin +
             "\"\n\nexe_bin = base64.b64decode(exe_bin)\n\nwith open(\"./exec\", \'wb\') as f:\n    f.write(exe_bin)\n\nsubprocess.run([\"chmod +x ./exec\"], shell=True)\nsubprocess.run([\"./exec\"], shell=True)")
