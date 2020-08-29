@@ -2,7 +2,6 @@ import base64
 import sys
 
 cpp_code = ""
-
 target_file = sys.argv[1]
 
 with open(target_file, 'r') as f:
@@ -13,7 +12,7 @@ python_code = "import subprocess\nimport sys\n\ncode = r\"\"\"" + cpp_code + \
     "subprocess.Popen([\'g++\', \'-std=c++17\', \'-O2\', \'sol.cpp\']).communicate()\n" + \
     "subprocess.Popen([\'./a.out\'], stdin=sys.stdin, stdout=sys.stdout).communicate()"
 
-encoded_code = base64.b64encode(python_code.encode())
+encoded_code = base64.b85encode(python_code.encode())
 
 with open("./sol.py", "w") as f:
-    f.write("import base64\n\nexec(base64.b64decode(b\'" + str(encoded_code, encoding='utf-8') + "\'))")
+    f.write("import base64\n\nexec(base64.b85decode(b\'" + str(encoded_code, encoding='utf-8') + "\'))")
