@@ -3,24 +3,15 @@ import subprocess
 from pathlib import Path
 import sys
 
+import zlib
 
 cpp_file = sys.argv[1]
 subprocess.run(['g++', '-std=c++17', '-O2',
                 cpp_file, '-o', Path(cpp_file).stem])
 
-ascii_bin = ""
-
-with open(Path(cpp_file).stem, 'rb') as f:
-    ascii_bin = f.read()
-
-ascii_bin = base64.b85encode(ascii_bin)
-ascii_bin = str(ascii_bin, encoding='utf-8')
-
-original_code = ""
-
-with open(cpp_file, 'r') as f:
-    original_code = f.read()
-
+ascii_bin = open(Path(cpp_file).stem, 'rb').read()
+ascii_bin = str(base64.b85encode(ascii_bin), encoding='utf-8')
+original_code = open(cpp_file, 'r').read()
 generated_code = Path(cpp_file).stem + ".py"
 
 with open(generated_code, 'w') as f:
