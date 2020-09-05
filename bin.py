@@ -3,7 +3,6 @@ import subprocess
 from pathlib import Path
 import sys
 
-import zlib
 
 cpp_file = sys.argv[1]
 subprocess.run(['g++', '-std=c++17', '-O2',
