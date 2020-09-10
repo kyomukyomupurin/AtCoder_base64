@@ -54,5 +54,5 @@ with open(generated_code, 'w') as f:
         "subprocess.run([\"chmod +x ./kyomu\"], shell=True)\nsubprocess.run([\"./kyomu\"], shell=True)")
 
 sz = sys.getsizeof(ascii_bin)
-print("The size of compressed binary is {:.1f} KB, {:.1f} % of limit.".format(
+print("The size of encoded binary is {:.1f} KB, {:.1f} % of limit.".format(
     sz / 1000, sz / 5120))
