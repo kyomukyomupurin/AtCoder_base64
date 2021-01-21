@@ -1,4 +1,3 @@
-
-open("./kyomu", 'wb').write(zlib.decompress(base64.b85decode(exe_bin)))
-subprocess.run(["chmod +x ./kyomu"], shell=True)
-subprocess.run(["./kyomu"], shell=True)
+    Path("kyomu").open("wb").write(zlib.decompress(base64.b85decode(ascii_bin)))
+    Path("kyomu").chmod(0o755)
+    subprocess.run("./kyomu")

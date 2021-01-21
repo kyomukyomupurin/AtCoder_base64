@@ -17,12 +17,12 @@ subprocess.run(["g++-10", "-std=c++20", "-O2", src, "-o", Path(src).stem])
 ascii_bin = str(base64.b85encode(zlib.compress(open(Path(src).stem, "rb").read())), encoding="utf-8")
 
 with open(Path(src).stem + ".py", "w") as f:
-    f.write(open("./src1.txt", "r").read())
-    f.write("exe_bin = \"" + ascii_bin + "\"\n")
-    f.write(open("./src2.txt", "r").read())
+    f.write(Path("src1.txt").open("r").read())
+    f.write("    ascii_bin = \"" + ascii_bin + "\"\n")
+    f.write(Path("src2.txt").open("r").read())
 
     if args.original:
-        f.write("\n\n# Original source code : \n\"\"\"\n" + open(src, "r").read() + "\n\"\"\"")
+        f.write("\n\n# Original source code : \n\"\"\"\n" + Path(src).open("r").read() + "\n\"\"\"")
 
 sz = sys.getsizeof(ascii_bin)
-print("The size of encoded binary is {:.1f} KB, {:.1f} % of limit.".format(sz / 1000, sz / 5120))
+print("The size of compressed and encoded binary is {:.1f} KB, {:.1f} % of limit.".format(sz / 1000, sz / 5120))

@@ -2,6 +2,10 @@
 
 import base64
 import subprocess
+from pathlib import Path
 import zlib
 
 
+if Path("kyomu").is_file():
+    subprocess.run("./kyomu")
+else:
