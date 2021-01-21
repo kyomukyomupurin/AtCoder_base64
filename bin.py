@@ -18,7 +18,7 @@ ascii_bin = str(base64.b85encode(zlib.compress(open(Path(src).stem, "rb").read()
 
 with open(Path(src).stem + ".py", "w") as f:
     f.write(Path("src1.txt").open("r").read())
-    f.write("    ascii_bin = \"" + ascii_bin + "\"\n")
+    f.write("ascii_bin = \"" + ascii_bin + "\"\n")
     f.write(Path("src2.txt").open("r").read())
 
     if args.original:
