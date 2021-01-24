@@ -16,7 +16,7 @@ subprocess.run(["g++-10", "-std=c++20", "-O2", src, "-o", Path(src).stem])
 
 ascii_bin = str(base64.b85encode(zlib.compress(open(Path(src).stem, "rb").read())), encoding="utf-8")
 
-with open(Path(src).stem + ".py", "w") as f:
+with Path(Path(src).stem + ".py").open("w") as f:
     f.write(Path("src1.txt").open("r").read())
     f.write("ascii_bin = \"" + ascii_bin + "\"\n")
     f.write(Path("src2.txt").open("r").read())
