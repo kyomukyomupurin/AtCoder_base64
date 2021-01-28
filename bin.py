@@ -14,7 +14,7 @@ args = parser.parse_args()
 src = args.cpp
 subprocess.run(["g++-10", "-std=c++20", "-O2", src, "-o", Path(src).stem])
 
-ascii_bin = str(base64.b85encode(zlib.compress(open(Path(src).stem, "rb").read())), encoding="utf-8")
+ascii_bin = str(base64.b85encode(zlib.compress(Path(Path(src).stem).open("rb").read())), encoding="utf-8")
 
 with Path(Path(src).stem + ".py").open("w") as f:
     f.write(Path("src1.txt").open("r").read())
