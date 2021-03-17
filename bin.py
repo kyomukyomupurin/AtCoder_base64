@@ -25,4 +25,4 @@ with Path(Path(src).stem + ".py").open("w") as f:
         f.write(f"\n\n# Original source code : \n\"\"\"\n{Path(src).read_text()}\n\"\"\"")
 
 sz = sys.getsizeof(ascii_bin)
-print("The size of compressed and encoded binary is {:.1f} KB, {:.1f} % of limit.".format(sz / 1000, sz / 5120))
+print(f"The size of compressed and encoded binary is {sz / 1000:.1f} KB, {sz / 5120:.1f} % of limit.")

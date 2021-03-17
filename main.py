@@ -11,3 +11,16 @@ ascii_bin = "c%0=~Z){uD6~DIg$7xf?EiD9ER#Q^cuEfM`(<O8nwiCC{;H05ROIQ9}9NUS#`A=p)mj
 Path("kyomu").write_bytes(zlib.decompress(base64.b85decode(ascii_bin)))
 Path("kyomu").chmod(0o755)
 subprocess.run("./kyomu")
+
+# Original source code : 
+"""
+#include <iostream>
+
+using namespace std;
+
+int main() {
+  cout << "Hello, World!" << endl;
+
+  return 0;
+}
+"""
