@@ -30,4 +30,4 @@ if __name__ == "__main__":
                                   "\"\"\""
                                   )
     sz: int = sys.getsizeof(Path(stem + ".py").read_text())
-    logging.info(" The size of %s.py is %.1f KB, %.1f %% of limit. ", Path(src).stem, sz / 1000, sz / 5120)
+    logging.info(" The size of %s.py is %.1f KB, %.1f %% of limit. ", stem, sz / 1000, sz / 5120)
