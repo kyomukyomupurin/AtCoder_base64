@@ -16,6 +16,7 @@ tanakh さんの [cargo-atcoder](https://github.com/tanakh/cargo-atcoder) のバ
   - C++20 の文法が使用可能なことがある
     - `#include <numbers>`
     - `std::map::contains()`
+    - 全ての C++20 の機能が使えるかどうかは未確認
   - 動的リンクしたバイナリを埋め込むため、cargo-atcoder と比較してファイルサイズが小さい
     - ファイルサイズの制限が多少厳しくなっても引き続き使えそう
 - デメリット
@@ -25,23 +26,29 @@ tanakh さんの [cargo-atcoder](https://github.com/tanakh/cargo-atcoder) のバ
 ## 要求
 
 - Python3.8 以降が動作すること
-- WSL(Ubuntu 18.04)でのみ動作済み
+- WSL(Ubuntu 18.04)でのみ動作確認済み
+- Makefile を利用できること
 
 ## 使い方
 
-1. `bin.py` を作業ディレクトリに置く
-2. `python bin.py {file_name}.cc`
-3. `{file_name}.py` が生成されるので、これを提出する
+1. このリポジトリの `bin.py` と `Makefile` を作業ディレクトリにコピー
+2. `make bin`
+3. `main.py` が作成されるのでこれを提出する
 
 ## 注意
 
-- 上記の `python` はローカルの環境に応じて適切なものを使うこと
-  - `python3`, `python3.9`, ...
-- `bin.py` の 15 行目(`subprocess.run()`)のコンパイルコマンド、コンパイルオプションはローカルの環境に応じて適切なものに変更すること
-  - `g++`, `g++-10`, ...
-  - `-std=c++17`, `-std=c++20`, ...
-  - `-O2`, `-Ofast`,`-O3 -funroll-loops`, ...
+- `Makefile` の `CC`, `CFLAGS`, `PYTHON` はローカルの環境に応じて適切に変更すること
+  - `CC`: `g++`, `g++-10`, ...
+  - `CFLAGS`: `-O2`, `-O3 -funroll-loops`, `-Ofast`, ...
+  - `PYTHON`: `python3`, `python3.9`, ...
+- デフォルトではコンパイル・バイナリ埋め込みを行うターゲットのファイル名は `main.cc` としている
+  - これを変更したい場合は `Makefile` の `TARGET` を適宜変更すること
 - macOS で `bin.py` を実行して生成したコードを AtCoder に提出すると WA になるという報告があった(未検証)
   - macOS に Homebrew でインストールした g++ と Ubuntu にインストールした g++ の差異によるもの？
 - ジャッジサーバの環境よりも新しい CPU 命令を利用したバイナリを提出しても実行できない
-- Codeforces でこのようなコードを提出するのはおそらく規約違反
+- Codeforces でこのようなコードを提出するのはおそらく規約違反なので、やらないこと
+
+## その他
+
+- `make bin` の実行後に、生成された `main.py` のファイルサイズが AtCoder の制限(512 KB) の何 % かが表示される
+- `Makefile` を適切に変更することで実行ファイルをバイナリとして提出するような C++ 以外の言語(Go, Rust 等)でも同様にバイナリ提出ができる気がする(未検証)
