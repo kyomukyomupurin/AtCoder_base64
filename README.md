@@ -1,54 +1,63 @@
+# AtCoder_base64 - AtCoder で使えるバイナリ提出ツール
+
 [![](https://img.shields.io/badge/license-CC0-lightgrey.svg?style=flat&logo=Creative-Commons)](https://github.com/kyomukyomupurin/snippets_generator/blob/master/LICENSE)
-![](https://img.shields.io/badge/C++-20-brightgreen.svg?style=flat&logo=c%2B%2B)
-![](https://img.shields.io/badge/g++-10.3.0-blue.svg?style=flat&logo=GNU)
-![](https://img.shields.io/badge/Python-3.9.2-brightgreen.svg?style=flat&logo=Python)
-![](https://img.shields.io/badge/OS-WSL-yellow.svg?style=flat&logo=Linux)
-![](https://img.shields.io/badge/Ubuntu-18.04-orange.svg?style=flat&logo=Ubuntu)
 
-# AtCoder_base64
+## About
 
-## これはなに
+[tanakh](https://twitter.com/tanakh) さんが作成された [cargo-atcoder](https://github.com/tanakh/cargo-atcoder) に含まれている、バイナリを提出する機能が面白いと思い、C++ のソースコードをローカルでビルドしてバイナリで提出できるようなツールを自分で書いてみました。
 
-tanakh さんの [cargo-atcoder](https://github.com/tanakh/cargo-atcoder) のバイナリ提出機能を見て面白いと思い、C++ 用のものを Python で書いてみた。
+以下の環境で動作テストを行っています。
 
-- メリット
-  - ローカルでコンパイルオプションを自由に設定できる
-  - C++20 の文法が使用可能なことがある
-    - `#include <numbers>`
-    - `std::map::contains()`
-    - 全ての C++20 の機能が使えるかどうかは未確認
-  - 動的リンクしたバイナリを埋め込むため、cargo-atcoder と比較してファイルサイズが小さい
-    - ファイルサイズの制限が多少厳しくなっても引き続き使えそう
-- デメリット
-  - 実行時のオーバーヘッドが 40ms くらい生じる
-    - ジャッジサーバで実行のたびにバイナリの書き込みを行っているため
+- Windows Subsystem for Linux(Ubuntu 18.04)
 
-## 要求
+また、詳細な動作テストは行っていませんが、最近のバージョンの Ubuntu であれば動作すると思います。
 
-- Python3.8 以降が動作すること
-- WSL(Ubuntu 18.04)でのみ動作確認済み
-- Makefile を利用できること
+以下の環境では動作**しない**という報告を受けました（未調査）。
 
-## 使い方
+- macOS
 
-1. このリポジトリの `bin.py` と `Makefile` を作業ディレクトリにコピー
-2. `make bin`
-3. `main.py` が作成されるのでこれを提出する
+ローカルでビルドするので、C++20 の文法も気にせず使えます。動的リンクでビルドしているので、AtCoder のジャッジサーバにインストールされていないような外部ライブラリを使用することはできません。
 
-## 注意
+C++ のソースコードのビルドには Makefile を使用しています。バイナリを Base64 でエンコードするスクリプトは Python で書いています。提出用スクリプトも Python のコードが生成されます。これは、Python の標準ライブラリには `base64` モジュールが用意されており、実装が容易であるためです。
 
-- `Makefile` の `CC`, `CFLAGS`, `PYTHON` はローカルの環境に応じて適切に変更すること
-  - `CC`: `g++`, `g++-10`, ...
-  - `CFLAGS`: `-O2`, `-O3 -funroll-loops`, `-Ofast`, ...
-  - `PYTHON`: `python3`, `python3.9`, ...
-- デフォルトではコンパイル・バイナリ埋め込みを行うターゲットのファイル名は `main.cc` としている
-  - これを変更したい場合は `Makefile` の `TARGET` を適宜変更すること
-- macOS で `bin.py` を実行して生成したコードを AtCoder に提出すると WA になるという報告があった(未検証)
-  - macOS に Homebrew でインストールした g++ と Ubuntu にインストールした g++ の差異によるもの？
-- ジャッジサーバの環境よりも新しい CPU 命令を利用したバイナリを提出しても実行できない
-- Codeforces でこのようなコードを提出するのはおそらく規約違反なので、やらないこと
+未検証ですが、適切に Makefile を編集することで C++ 以外のコンパイル言語でもバイナリ提出ができる気がしています。
 
-## その他
+## Requirements
 
-- `make bin` の実行後に、生成された `main.py` のファイルサイズが AtCoder の制限(512 KB) の何 % かが表示される
-- `Makefile` を適切に変更することで実行ファイルをバイナリとして提出するような C++ 以外の言語(Go, Rust 等)でも同様にバイナリ提出ができる気がする(未検証)
+以下が必要です。
+
+- g++
+- Python(>= 3.8)
+- Makefile
+
+## Installation
+
+このリポジトリをクローンしてください。
+
+`git clone https://github.com/kyomukyomupurin/AtCoder_base64`
+
+## Quick Start
+
+1. g++ や Python を使用するためのコマンドはローカルの環境に依存するので、`Makefile` の `CC` 、`CFLAGS` 、`PYTHON` 、`TARGET` を適切に編集してください。デフォルトでは以下のようになっています。
+
+```makefile
+CC = g++-10
+CFLAGS = -std=c++20 -O2
+PYTHON = python3.9
+TARGET = main
+
+
+build: $(TARGET).cc
+	$(CC) $(CFLAGS) $(TARGET).cc -o $(TARGET)
+
+bin:
+	@make -s build
+	@$(PYTHON) bin.py $(TARGET).cc
+
+```
+
+2. `{TARGET}.cc` を編集してください。
+
+3. コマンドラインから `make bin` を実行してください。
+
+4. 提出用の `{TARGET}.py` が作成されます。
